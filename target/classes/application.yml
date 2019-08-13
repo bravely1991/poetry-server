@@ -1,0 +1,26 @@
+# Tomcat
+server:
+  port: 8080
+
+#
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.poetry.entity
+
+
+# redis配置
+redis:
+
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://106.12.73.198:3306/poery
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+
+logging:
+  level:
+    com.poetry.dao: INFO

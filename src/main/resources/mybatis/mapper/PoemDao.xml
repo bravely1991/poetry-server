@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.poetry.dao.PoemDao">
+
+    <sql id="Base_Column_List">
+        contentId, contentIndex, title, writer, dynasty
+    </sql>
+
+    <sql id="All_Column_List">
+        contentId, contentIndex, content, title, writer, dynasty
+    </sql>
+
+    <select id="listPoems" resultType="com.poetry.entity.PoemDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM poem_table;
+    </select>
+
+    <select id="listPoemsByWriter" resultType="com.poetry.entity.PoemDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM poem_table
+        WHERE writer = #{writer};
+    </select>
+
+    <select id="listPoemsByKeyword" resultType="com.poetry.entity.PoemDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM poem_table
+        WHERE writer = #{keyword};
+    </select>
+
+    <select id="getPoemDetail" resultType="com.poetry.entity.PoemDO">
+        SELECT
+        <include refid="All_Column_List"/>
+        FROM poem_table
+        WHERE contentId = #{contentId} LIMIT 1;
+    </select>
+
+    <select id="listPoemsUserCollectByUserId" resultType="com.poetry.entity.PoemDO">
+        SELECT
+        P.contentId, P.contentIndex, P.content, P.title, P.writer, P.dynasty
+        FROM
+        ( SELECT contentId FROM user_poem_table WHERE userId = #{userId} AND isCollected = 1 )
+        u LEFT JOIN poem_table p ON p.contentId = u.contentId;
+    </select>
+
+
+</mapper>
