@@ -4,7 +4,6 @@ package com.poetry.controller;
 import com.poetry.dto.PoemDTO;
 import com.poetry.common.Response;
 import com.poetry.service.PoemService;
-import com.poetry.service.UserService;
 import com.poetry.utils.DozerUtil;
 import com.poetry.vo.PoemDetailVO;
 import com.poetry.vo.PoemListVO;
@@ -25,7 +24,7 @@ public class PoemController {
     @RequestMapping(value = "listPoems")
     public Response<List<PoemListVO>> listPoems() {
         List<PoemDTO> poemDtoList = poemService.listPoems();
-        if(poemDtoList == null) {
+        if(poemDtoList != null) {
             return Response.ok(DozerUtil.mapList(poemDtoList, PoemListVO.class));
         } else {
             return Response.error();
@@ -35,7 +34,7 @@ public class PoemController {
     @RequestMapping(value = "listPoemsByWriter")
     public Response<List<PoemListVO>> listPoemsByWriter(@PathParam("writer") String writer) {
         List<PoemDTO> poemDtoList = poemService.listPoemsByWriter(writer);
-        if(poemDtoList == null) {
+        if(poemDtoList != null) {
             return Response.ok(DozerUtil.mapList(poemDtoList, PoemListVO.class));
         } else {
             return Response.error();
@@ -45,7 +44,7 @@ public class PoemController {
     @RequestMapping(value = "listPoemsByKeyword")
     public Response<List<PoemListVO>> listPoemsByKeyword(@PathParam("keyword") String keyword) {
         List<PoemDTO> poemDtoList = poemService.listPoemsByKeyword(keyword);
-        if(poemDtoList == null) {
+        if(poemDtoList != null) {
             return Response.ok(DozerUtil.mapList(poemDtoList, PoemListVO.class));
         } else {
             return Response.error();
