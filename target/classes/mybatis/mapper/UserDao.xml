@@ -4,10 +4,10 @@
 <mapper namespace="com.poetry.dao.UserDao">
 
     <sql id="Base_Column_List">
-        userId, username, nickname, createTime, updateTime, token
+        userId, username, nickname, createTime, updateTime, token, userIndex
     </sql>
 
-    <select id="getUserbyUsernameAndPassword" resultType="com.poetry.entity.UserDO">
+    <select id="getUserByUsernameAndPassword" resultType="com.poetry.entity.UserDO">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user_table
@@ -40,6 +40,12 @@
             <if test="password != null">
                 password,
             </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">
@@ -50,6 +56,12 @@
             </if>
             <if test="password != null">
                 #{password},
+            </if>
+            <if test="nickname != null">
+                #{nickname},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
             </if>
         </trim>
     </insert>

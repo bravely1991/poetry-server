@@ -1,5 +1,6 @@
 package com.poetry.controller;
 
+import com.github.pagehelper.util.StringUtil;
 import com.poetry.dto.PoemDTO;
 import com.poetry.dto.UserDTO;
 import com.poetry.common.Response;
@@ -8,11 +9,10 @@ import com.poetry.utils.DozerUtil;
 import com.poetry.vo.PoemListVO;
 import com.poetry.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,34 +22,25 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "userLogin")
+    @RequestMapping(value = "userLogin", method = RequestMethod.POST)
     public Response<UserVO> getUserbyUsernameAndPassword(@RequestBody UserDTO userDto) {
-        UserDTO userDtoReturn = userService.getUserbyUsernameAndPassword(userDto);
-        if(userDtoReturn != null) {
-
-            //生成token
-            String token = UUID.randomUUID().toString().replace("-", "");
-            userDtoReturn.setToken(token);
-            boolean updateResult = userService.updateUserTokenByUserId(userDtoReturn);
-
-            if(updateResult == true) {
-                return Response.ok(DozerUtil.map(userDtoReturn, UserVO.class));
-            } else {
-                return Response.errorWithMsg("更新用户token失败，请重新登录");
-            }
-
+        UserDTO userDTO = userService.getUserbyUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
+        if(userDTO != null) {
+            return Response.ok(DozerUtil.map(userDTO, UserVO.class));
         } else {
             return Response.error();
         }
     }
 
-    @RequestMapping(value = "userRegister")
+    @RequestMapping(value = "userRegister", method = RequestMethod.POST)
     public Response<UserVO> saveUser(@RequestBody UserDTO userDto) {
+        // 1.保存用户信息
         boolean saveResult = userService.saveUser(userDto);
         if(saveResult == true) {
-            UserDTO userDtoLoginInfo = userService.getUserbyUsernameAndPassword(userDto);
-            if(userDtoLoginInfo != null) {
-                return Response.ok(DozerUtil.map(userDtoLoginInfo, UserVO.class));
+            // 2.查询用户登录信息
+            UserDTO userDTO = userService.getUserbyUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
+            if(userDTO != null) {
+                return Response.ok(DozerUtil.map(userDTO, UserVO.class));
             } else {
                 return Response.error();
             }
@@ -60,8 +51,8 @@ public class UserController {
     }
 
     @PostMapping(value = "userCollectPoemList")
-    public Response<List<PoemListVO>> listPoemsUserCollect(@RequestBody UserDTO userDto) {
-        List<PoemDTO> poemDtoList = userService.listPoemsUserCollect(userDto);
+    public Response<List<PoemListVO>> listPoemsUserCollect(@PathParam("userId") String userId) {
+        List<PoemDTO> poemDtoList = userService.listPoemsUserCollect(userId);
 
         if(poemDtoList != null) {
             return Response.ok(DozerUtil.mapList(poemDtoList, PoemListVO.class));
@@ -71,8 +62,8 @@ public class UserController {
     }
 
     @PostMapping(value = "userMemorizePoemList")
-    public Response<List<PoemListVO>> listPoemsUserMemorize(@RequestBody UserDTO userDto) {
-        List<PoemDTO> poemDtoList = userService.listPoemsUserCollect(userDto);
+    public Response<List<PoemListVO>> listPoemsUserMemorize(@PathParam("userId") String userId) {
+        List<PoemDTO> poemDtoList = userService.listPoemsUserCollect(userId);
 
         if(poemDtoList != null) {
             return Response.ok(DozerUtil.mapList(poemDtoList, PoemListVO.class));
@@ -82,8 +73,8 @@ public class UserController {
     }
 
     @PostMapping(value = "userPreparPoemList")
-    public Response<List<PoemListVO>> listPoemsUserPrepare(@RequestBody UserDTO userDto) {
-        List<PoemDTO> poemDtoList = userService.listPoemsUserCollect(userDto);
+    public Response<List<PoemListVO>> listPoemsUserPrepare(@PathParam("userId") String userId) {
+        List<PoemDTO> poemDtoList = userService.listPoemsUserCollect(userId);
 
         if(poemDtoList != null) {
             return Response.ok(DozerUtil.mapList(poemDtoList, PoemListVO.class));

@@ -1,5 +1,6 @@
 package com.poetry.serviceImpl;
 
+import com.github.pagehelper.util.StringUtil;
 import com.poetry.dao.PoemDao;
 import com.poetry.dao.UserDao;
 import com.poetry.dao.UserPoemDao;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,7 +29,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean saveUser(UserDTO userDto) {
-        Boolean result = userDao.saveUser(userDto.getUserId(), userDto.getUsername(), userDto.getPassword());
+        //生成userID
+        userDto.setUserId(UUID.randomUUID().toString().replace("-", ""));
+        //生成时间戳
+        userDto.setCreateTime(Long.toString(System.currentTimeMillis()));
+
+        Boolean result = userDao.saveUser(userDto.getUserId(), userDto.getUsername(), userDto.getPassword(),
+                userDto.getNickname(), userDto.getCreateTime());
         return result;
     }
 
@@ -39,30 +47,49 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserbyUsernameAndPassword(UserDTO userDto) {
-        UserDO userDOLoginInfo = userDao.getUserbyUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
-        return (userDOLoginInfo != null) ? DozerUtil.map(userDOLoginInfo, UserDTO.class) : null;
+    public UserDTO getUserbyUsernameAndPassword(String username, String password) {
+        UserDO userDOLoginInfo = userDao.getUserByUsernameAndPassword(username, password);
+        if (userDOLoginInfo != null) {
+            // 更新Token
+            String token = UUID.randomUUID().toString().replace("-", "");
+            userDOLoginInfo.setToken(token);
+
+            if (StringUtil.isEmpty(userDOLoginInfo.getNickname())) {
+                String nickname = "唐诗家园" + userDOLoginInfo.getUserIndex() +"号成员";
+                userDOLoginInfo.setNickname(nickname);
+            }
+
+            boolean updateResult = userDao.updateUserTokenByUserId(userDOLoginInfo.getUserId(), token);
+            if (updateResult == true) {
+                return DozerUtil.map(userDOLoginInfo, UserDTO.class);
+            } else {
+                return null;
+            }
+
+        } else {
+            return null;
+        }
     }
 
     //用户收藏诗列表
     @Override
     @Transactional
-    public List<PoemDTO> listPoemsUserCollect(UserDTO userDto) {
-        List<PoemDO> poemDOList = userPoemDao.listPoemsUserCollectByUserId(userDto.getUserId());
+    public List<PoemDTO> listPoemsUserCollect(String userId) {
+        List<PoemDO> poemDOList = userPoemDao.listPoemsUserCollectByUserId(userId);
         return DozerUtil.mapList(poemDOList, PoemDTO.class);
     }
 
     @Override
     @Transactional
-    public List<PoemDTO> listPoemsUserMemorize(UserDTO userDto) {
-        List<PoemDO> poemDOList = userPoemDao.listPoemsUserMemorizedByUserId(userDto.getUserId());
+    public List<PoemDTO> listPoemsUserMemorize(String userId) {
+        List<PoemDO> poemDOList = userPoemDao.listPoemsUserMemorizedByUserId(userId);
         return DozerUtil.mapList(poemDOList, PoemDTO.class);
     }
 
     @Override
     @Transactional
-    public List<PoemDTO> listPoemsUserPreparing(UserDTO userDto) {
-        List<PoemDO> poemDOList = userPoemDao.listPoemsUserPreparingByUserId(userDto.getUserId());
+    public List<PoemDTO> listPoemsUserPreparing(String userId) {
+        List<PoemDO> poemDOList = userPoemDao.listPoemsUserPreparingByUserId(userId);
         return DozerUtil.mapList(poemDOList, PoemDTO.class);
     }
 
