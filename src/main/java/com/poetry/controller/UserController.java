@@ -22,64 +22,33 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "userLogin", method = RequestMethod.POST)
-    public Response<UserVO> getUserbyUsernameAndPassword(@RequestBody UserDTO userDto) {
-        UserDTO userDTO = userService.getUserbyUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
-        if(userDTO != null) {
-            return Response.ok(DozerUtil.map(userDTO, UserVO.class));
-        } else {
-            return Response.error();
-        }
-    }
-
-    @RequestMapping(value = "userRegister", method = RequestMethod.POST)
-    public Response<UserVO> saveUser(@RequestBody UserDTO userDto) {
-        // 1.保存用户信息
-        boolean saveResult = userService.saveUser(userDto);
-        if(saveResult == true) {
-            // 2.查询用户登录信息
+    @PostMapping(value = "userLoginOrRegister")
+    public Response<UserVO> userLoginOrRegister(@RequestBody UserDTO userDto) {
+        // 1.查询用户是否存在
+        Boolean isExitUser = userService.getIsExitUser(userDto.getUsername());
+        if (isExitUser == true) {
+            // 2.1 存在，则登录
             UserDTO userDTO = userService.getUserbyUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
             if(userDTO != null) {
                 return Response.ok(DozerUtil.map(userDTO, UserVO.class));
             } else {
-                return Response.error();
+                return Response.errorWithMsg("登录失败，请检查用户名和密码是否一致");
             }
         } else {
-            return Response.errorWithMsg("注册失败，用户名已被注册");
+            // 2.2 不存在，则注册
+            Boolean saveResult = userService.saveUser(userDto);
+            if(saveResult == true) {
+                // 2.查询用户登录信息
+                UserDTO userDTO = userService.getUserbyUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
+                if(userDTO != null) {
+                    return Response.ok(DozerUtil.map(userDTO, UserVO.class));
+                } else {
+                    return Response.error();
+                }
+            } else {
+                return Response.errorWithMsg("注册失败，用户名已被注册");
+            }
         }
 
-    }
-
-    @PostMapping(value = "userCollectPoemList")
-    public Response<List<PoemListVO>> listPoemsUserCollect(@PathParam("userId") String userId) {
-        List<PoemDTO> poemDtoList = userService.listPoemsUserCollect(userId);
-
-        if(poemDtoList != null) {
-            return Response.ok(DozerUtil.mapList(poemDtoList, PoemListVO.class));
-        } else {
-            return Response.error();
-        }
-    }
-
-    @PostMapping(value = "userMemorizePoemList")
-    public Response<List<PoemListVO>> listPoemsUserMemorize(@PathParam("userId") String userId) {
-        List<PoemDTO> poemDtoList = userService.listPoemsUserCollect(userId);
-
-        if(poemDtoList != null) {
-            return Response.ok(DozerUtil.mapList(poemDtoList, PoemListVO.class));
-        } else {
-            return Response.error();
-        }
-    }
-
-    @PostMapping(value = "userPreparPoemList")
-    public Response<List<PoemListVO>> listPoemsUserPrepare(@PathParam("userId") String userId) {
-        List<PoemDTO> poemDtoList = userService.listPoemsUserCollect(userId);
-
-        if(poemDtoList != null) {
-            return Response.ok(DozerUtil.mapList(poemDtoList, PoemListVO.class));
-        } else {
-            return Response.error();
-        }
     }
 }

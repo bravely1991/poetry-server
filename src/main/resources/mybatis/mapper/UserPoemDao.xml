@@ -27,4 +27,14 @@
         u LEFT JOIN poem_table p ON p.contentId = u.contentId;
     </select>
 
+    <insert id="poemCollect">
+        INSERT INTO
+        user_poem_table
+        (userId, contentId, isCollected)
+        VALUES
+        (#{userId}, #{contentId}, #{isCollect})
+        ON DUPLICATE KEY UPDATE
+        isCollected = #{isCollect};
+    </insert>
+
 </mapper>

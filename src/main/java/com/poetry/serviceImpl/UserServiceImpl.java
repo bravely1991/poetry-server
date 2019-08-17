@@ -27,6 +27,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserPoemDao userPoemDao;
 
+    // 用户是否存在
+    @Override
+    public Boolean getIsExitUser(String username) {
+        return userDao.getIsExitUser(username);
+    }
+
     @Override
     public Boolean saveUser(UserDTO userDto) {
         //生成userID
@@ -69,28 +75,6 @@ public class UserServiceImpl implements UserService {
         } else {
             return null;
         }
-    }
-
-    //用户收藏诗列表
-    @Override
-    @Transactional
-    public List<PoemDTO> listPoemsUserCollect(String userId) {
-        List<PoemDO> poemDOList = userPoemDao.listPoemsUserCollectByUserId(userId);
-        return DozerUtil.mapList(poemDOList, PoemDTO.class);
-    }
-
-    @Override
-    @Transactional
-    public List<PoemDTO> listPoemsUserMemorize(String userId) {
-        List<PoemDO> poemDOList = userPoemDao.listPoemsUserMemorizedByUserId(userId);
-        return DozerUtil.mapList(poemDOList, PoemDTO.class);
-    }
-
-    @Override
-    @Transactional
-    public List<PoemDTO> listPoemsUserPreparing(String userId) {
-        List<PoemDO> poemDOList = userPoemDao.listPoemsUserPreparingByUserId(userId);
-        return DozerUtil.mapList(poemDOList, PoemDTO.class);
     }
 
 }

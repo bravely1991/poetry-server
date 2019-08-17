@@ -7,6 +7,13 @@
         userId, username, nickname, createTime, updateTime, token, userIndex
     </sql>
 
+    <select id="getIsExitUser" resultType = "Boolean">
+        SELECT
+        COUNT(1)
+        FROM user_table
+        WHERE username = #{username};
+    </select>
+
     <select id="getUserByUsernameAndPassword" resultType="com.poetry.entity.UserDO">
         SELECT
         <include refid="Base_Column_List"/>
