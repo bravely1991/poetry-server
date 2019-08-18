@@ -22,7 +22,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "userLoginOrRegister")
+    @RequestMapping(value="userLoginOrRegister", method={RequestMethod.GET, RequestMethod.POST})
+//    @RequestMapping(value = "userLoginOrRegister", produces = {"application/json;charset=UTF-8;"}, method = RequestMethod.POST)
     public Response<UserVO> userLoginOrRegister(@RequestBody UserDTO userDto) {
         // 1.查询用户是否存在
         Boolean isExitUser = userService.getIsExitUser(userDto.getUsername());

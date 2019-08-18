@@ -28,7 +28,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM poem_table
-        WHERE writer = #{keyword};
+        WHERE writer LIKE CONCAT('%',#{keyword},'%') OR title LIKE CONCAT('%',#{keyword},'%') OR content  LIKE CONCAT('%',#{keyword},'%');
     </select>
 
     <select id="getPoemDetail" resultType="com.poetry.entity.PoemDO">

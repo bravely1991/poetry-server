@@ -9,6 +9,7 @@ import com.poetry.vo.PoemListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
@@ -20,7 +21,7 @@ public class UserPoemController {
     @Autowired
     private UserPoemService userPoemService;
 
-    @PostMapping(value = "userPoemCollect")
+    @RequestMapping(value="userPoemCollect", method={RequestMethod.GET, RequestMethod.POST})
     public Response<Void> userPoemCollect(UserPoemDTO userPoemDTO) {
 
         Boolean result = userPoemService.userPoemCollect(userPoemDTO.getUserId(), userPoemDTO.getContentId(),
@@ -33,7 +34,7 @@ public class UserPoemController {
         }
     }
 
-    @PostMapping(value = "userCollectPoemList")
+    @RequestMapping(value="userCollectPoemList", method={RequestMethod.GET, RequestMethod.POST})
     public Response<List<PoemListVO>> listPoemsUserCollect(@PathParam("userId") String userId) {
         List<PoemDTO> poemDtoList = userPoemService.listPoemsUserCollect(userId);
 

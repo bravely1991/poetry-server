@@ -10,6 +10,7 @@ import com.poetry.vo.PoemListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
@@ -21,7 +22,7 @@ public class PoemController {
     @Autowired
     private PoemService poemService;
 
-    @RequestMapping(value = "listPoems")
+    @RequestMapping(value="listPoems", method={RequestMethod.GET, RequestMethod.POST})
     public Response<List<PoemListVO>> listPoems() {
         List<PoemDTO> poemDtoList = poemService.listPoems();
         if(poemDtoList != null) {
@@ -31,7 +32,7 @@ public class PoemController {
         }
     }
 
-    @RequestMapping(value = "listPoemsByWriter")
+    @RequestMapping(value="listPoemsByWriter", method={RequestMethod.GET, RequestMethod.POST})
     public Response<List<PoemListVO>> listPoemsByWriter(@PathParam("writer") String writer) {
         List<PoemDTO> poemDtoList = poemService.listPoemsByWriter(writer);
         if(poemDtoList != null) {
@@ -41,7 +42,7 @@ public class PoemController {
         }
     }
 
-    @RequestMapping(value = "listPoemsByKeyword")
+    @RequestMapping(value="listPoemsByKeyword", method={RequestMethod.GET, RequestMethod.POST})
     public Response<List<PoemListVO>> listPoemsByKeyword(@PathParam("keyword") String keyword) {
         List<PoemDTO> poemDtoList = poemService.listPoemsByKeyword(keyword);
         if(poemDtoList != null) {
@@ -51,7 +52,7 @@ public class PoemController {
         }
     }
 
-    @RequestMapping(value = "getPoemDetail")
+    @RequestMapping(value="getPoemDetail", method={RequestMethod.GET, RequestMethod.POST})
     public Response<PoemDetailVO> getPoemDetail(@PathParam("contentId") String contentId) {
         PoemDTO poemDto = poemService.getPoemDetail(contentId);
         if(poemDto != null) {
