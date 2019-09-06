@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserbyUsernameAndPassword(String username, String password) {
+    public UserDTO getUserByUsernameAndPassword(String username, String password) {
         UserDO userDOLoginInfo = userDao.getUserByUsernameAndPassword(username, password);
         if (userDOLoginInfo != null) {
             // 更新Token
@@ -72,6 +72,16 @@ public class UserServiceImpl implements UserService {
                 return null;
             }
 
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public UserDTO getUserByUserId(String userId) {
+        UserDO userDO = userDao.getUserByUserId(userId);
+        if (userDO != null) {
+            return DozerUtil.map(userDO, UserDTO.class);
         } else {
             return null;
         }

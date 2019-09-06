@@ -1,12 +1,17 @@
 package com.poetry.controller;
 
 import com.github.pagehelper.util.StringUtil;
+import com.poetry.dto.LabelDTO;
 import com.poetry.dto.PoemDTO;
 import com.poetry.dto.UserDTO;
 import com.poetry.common.Response;
+import com.poetry.service.UserLabelService;
+import com.poetry.service.UserPoemService;
 import com.poetry.service.UserService;
 import com.poetry.utils.DozerUtil;
+import com.poetry.vo.LabelVO;
 import com.poetry.vo.PoemListVO;
+import com.poetry.vo.UserHomePageVO;
 import com.poetry.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +26,10 @@ import java.util.UUID;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserPoemService userPoemService;
+    @Autowired
+    private UserLabelService userLabelService;
 
     @RequestMapping(value="userLoginOrRegister", method={RequestMethod.GET, RequestMethod.POST})
 //    @RequestMapping(value = "userLoginOrRegister", produces = {"application/json;charset=UTF-8;"}, method = RequestMethod.POST)
@@ -29,7 +38,7 @@ public class UserController {
         Boolean isExitUser = userService.getIsExitUser(userDto.getUsername());
         if (isExitUser == true) {
             // 2.1 存在，则登录
-            UserDTO userDTO = userService.getUserbyUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
+            UserDTO userDTO = userService.getUserByUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
             if(userDTO != null) {
                 return Response.ok(DozerUtil.map(userDTO, UserVO.class));
             } else {
@@ -40,7 +49,7 @@ public class UserController {
             Boolean saveResult = userService.saveUser(userDto);
             if(saveResult == true) {
                 // 2.查询用户登录信息
-                UserDTO userDTO = userService.getUserbyUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
+                UserDTO userDTO = userService.getUserByUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
                 if(userDTO != null) {
                     return Response.ok(DozerUtil.map(userDTO, UserVO.class));
                 } else {
@@ -50,6 +59,31 @@ public class UserController {
                 return Response.errorWithMsg("注册失败，用户名已被注册");
             }
         }
+    }
+
+    @RequestMapping(value="userhomepage", method={RequestMethod.GET, RequestMethod.POST})
+    public Response<UserHomePageVO> userhomepage(@PathParam("userId") String userId) {
+        UserHomePageVO userHomePageVO = new UserHomePageVO();
+
+        UserDTO userDTO = userService.getUserByUserId(userId);
+        userHomePageVO.setNickname(userDTO.getNickname());
+        userHomePageVO.setHeaderImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567788835412&di=b71deb8f8148b26c38a6108e4515e4ff&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F22%2F20190122210534_qkmxb.jpg");
+
+
+        List<LabelDTO> labelDTOList = userLabelService.listLabelsByUserId(userId);
+        if(labelDTOList != null) {
+            List<LabelVO> labelVOList = DozerUtil.mapList(labelDTOList, LabelVO.class);
+            userHomePageVO.setLabelList(labelVOList);
+        }
+
+        List<PoemDTO> poemDtoList = userPoemService.listPoemsUserCollect(userId);
+        if(poemDtoList != null) {
+            List<PoemListVO> poemListVOList = DozerUtil.mapList(poemDtoList, PoemListVO.class);
+            userHomePageVO.setPoemListList(poemListVOList);
+        }
+
+        return Response.ok(userHomePageVO);
 
     }
+
 }

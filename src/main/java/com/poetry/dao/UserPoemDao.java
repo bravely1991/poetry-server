@@ -10,7 +10,6 @@ public interface UserPoemDao {
     List<PoemDO> listPoemsUserMemorizedByUserId(String userId);
     List<PoemDO> listPoemsUserPreparingByUserId(String userId);
 
-
     int poemCollect(@Param("userId") String userId, @Param("contentId") String contentId,
                         @Param("isCollect") Boolean isCollect);
 

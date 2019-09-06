@@ -6,6 +6,7 @@ import com.poetry.dto.UserPoemDTO;
 import com.poetry.service.UserPoemService;
 import com.poetry.utils.DozerUtil;
 import com.poetry.vo.PoemListVO;
+import com.poetry.vo.UserPoemVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +57,7 @@ public class UserPoemController {
         }
     }
 
-    @PostMapping(value = "userPreparPoemList")
+    @PostMapping(value = "userPreparePoemList")
     public Response<List<PoemListVO>> listPoemsUserPrepare(@PathParam("userId") String userId) {
         List<PoemDTO> poemDtoList = userPoemService.listPoemsUserCollect(userId);
 
@@ -65,5 +66,18 @@ public class UserPoemController {
         } else {
             return Response.error();
         }
+    }
+
+    @PostMapping(value = "userPoemInfo")
+    public Response<UserPoemVO> userPoemInfo(@PathParam("userId") String userId) {
+        List<PoemDTO> poemDtoList = userPoemService.listPoemsUserCollect(userId);
+
+        UserPoemVO userPoemVO = new UserPoemVO();
+        if(poemDtoList != null) {
+            List<PoemListVO> poemListVOList = DozerUtil.mapList(poemDtoList, PoemListVO.class);
+            userPoemVO.setPoemList(poemListVOList);
+        }
+
+        return Response.ok(userPoemVO);
     }
 }

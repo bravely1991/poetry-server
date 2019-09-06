@@ -21,6 +21,13 @@
         WHERE username = #{username} AND password = #{password} LIMIT 1;
     </select>
 
+    <select id="getUserByUserId" resultType="com.poetry.entity.UserDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user_table
+        WHERE userId = #{userId} LIMIT 1;
+    </select>
+
     <update id="updateUserTokenByUserId">
         UPDATE
         user_table
@@ -28,7 +35,7 @@
         WHERE userId = #{userId}
     </update>
 
-    <select id="getUserbyUserId" resultType="com.poetry.entity.UserDO">
+    <select id="getUserByUserId" resultType="com.poetry.entity.UserDO">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user_table
