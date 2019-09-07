@@ -1,6 +1,5 @@
 package com.poetry.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,8 +11,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserPoemDTO implements Serializable {
+public class PoemRequestDTO implements Serializable {
     private String userId;
     private String contentId;
+    private String writer;
+    private String keyword;
     private Boolean isCollect;
 }

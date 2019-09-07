@@ -2,7 +2,7 @@ package com.poetry.controller;
 
 import com.poetry.common.Response;
 import com.poetry.dto.PoemDTO;
-import com.poetry.dto.UserPoemDTO;
+import com.poetry.dto.PoemRequestDTO;
 import com.poetry.service.UserPoemService;
 import com.poetry.utils.DozerUtil;
 import com.poetry.vo.PoemListVO;
@@ -23,10 +23,10 @@ public class UserPoemController {
     private UserPoemService userPoemService;
 
     @RequestMapping(value="userPoemCollect", method={RequestMethod.GET, RequestMethod.POST})
-    public Response<Void> userPoemCollect(UserPoemDTO userPoemDTO) {
+    public Response<Void> userPoemCollect(PoemRequestDTO poemRequestDTO) {
 
-        Boolean result = userPoemService.userPoemCollect(userPoemDTO.getUserId(), userPoemDTO.getContentId(),
-                userPoemDTO.getIsCollect());
+        Boolean result = userPoemService.userPoemCollect(poemRequestDTO.getUserId(), poemRequestDTO.getContentId(),
+                poemRequestDTO.getIsCollect());
 
         if(result == true) {
             return Response.ok(null);
@@ -68,16 +68,4 @@ public class UserPoemController {
         }
     }
 
-    @PostMapping(value = "userPoemInfo")
-    public Response<UserPoemVO> userPoemInfo(@PathParam("userId") String userId) {
-        List<PoemDTO> poemDtoList = userPoemService.listPoemsUserCollect(userId);
-
-        UserPoemVO userPoemVO = new UserPoemVO();
-        if(poemDtoList != null) {
-            List<PoemListVO> poemListVOList = DozerUtil.mapList(poemDtoList, PoemListVO.class);
-            userPoemVO.setPoemList(poemListVOList);
-        }
-
-        return Response.ok(userPoemVO);
-    }
 }
