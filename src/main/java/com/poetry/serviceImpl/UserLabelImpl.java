@@ -28,4 +28,9 @@ public class UserLabelImpl implements UserLabelService {
         return DozerUtil.mapList(labelDOList, LabelDTO.class);
     }
 
+    @Override
+    public Boolean getIsPoemLabelAdded(String userId, String contentId, String labelId) {
+        return userLabelDao.getIsPoemLabelAdded(userId, contentId, labelId);
+    }
+
 }

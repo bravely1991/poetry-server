@@ -7,4 +7,5 @@ import java.util.List;
 public interface UserLabelService {
     List<LabelDTO> listLabelsByUserId(String userId);
     List<LabelDTO> listLabelsByUserIdAndContentId(String userId, String contentId);
+    Boolean getIsPoemLabelAdded(String userId, String contentId, String labelId);
 }

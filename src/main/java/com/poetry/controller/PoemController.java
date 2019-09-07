@@ -1,6 +1,5 @@
 package com.poetry.controller;
 
-
 import com.poetry.dto.LabelDTO;
 import com.poetry.dto.PoemDTO;
 import com.poetry.common.Response;
@@ -90,13 +89,21 @@ public class PoemController {
     @RequestMapping(value="getPoemDetail", method={RequestMethod.GET, RequestMethod.POST})
     public Response<PoemDetailVO> getPoemDetail(PoemRequestDTO poemRequestDTO) {
         PoemDTO poemDto = poemService.getPoemDetail(poemRequestDTO.getContentId());
+
+
         if(poemDto != null) {
             PoemDetailVO poemDetailVO = DozerUtil.map(poemDto, PoemDetailVO.class);
-            List<LabelDTO> poemLabelDTOList = userLabelService.listLabelsByUserIdAndContentId(poemRequestDTO.getUserId(), poemRequestDTO.getContentId());
 
-            if (poemLabelDTOList != null) {
-                List<LabelVO> poemLabelVOList = DozerUtil.mapList(poemLabelDTOList, LabelVO.class);
-                poemDetailVO.setLabelList(poemLabelVOList);
+            List<LabelDTO> labelDTOList = userLabelService.listLabelsByUserId(poemRequestDTO.getUserId());
+            if(labelDTOList != null) {
+                List<LabelVO> labelVOList = DozerUtil.mapList(labelDTOList, LabelVO.class);
+
+                for (LabelVO labelVO : labelVOList) {
+                    Boolean isAdded = userLabelService.getIsPoemLabelAdded(poemRequestDTO.getUserId(), poemRequestDTO.getContentId(), labelVO.getLabelId());
+                    labelVO.setIsAdded(isAdded);
+                }
+
+                poemDetailVO.setLabelList(labelVOList);
             }
 
             return Response.ok(poemDetailVO);
@@ -106,4 +113,3 @@ public class PoemController {
     }
 
 }
-

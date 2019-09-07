@@ -8,4 +8,5 @@ import java.util.List;
 public interface UserLabelDao {
     List<LabelDO> listLabelsByUserId(String userId);
     List<LabelDO> listLabelsByUserIdAndContentId(@Param("userId") String userId, @Param("contentId") String contentId);
+    Boolean getIsPoemLabelAdded(@Param("userId") String userId, @Param("contentId") String contentId, @Param("labelId") String labelId);
 }

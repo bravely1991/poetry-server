@@ -20,4 +20,11 @@
 
     </select>
 
+    <select id="getIsPoemLabelAdded" resultType = "Boolean">
+        SELECT
+        COUNT(1)
+        FROM user_poem_label_table
+        WHERE userId = #{userId} AND contentId = #{contentId} AND labelId = #{labelId};
+    </select>
+
 </mapper>
