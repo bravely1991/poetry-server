@@ -22,4 +22,10 @@ public class UserLabelImpl implements UserLabelService {
         return DozerUtil.mapList(labelDOList, LabelDTO.class);
     }
 
+    @Override
+    public List<LabelDTO> listLabelsByUserIdAndContentId(String userId, String contentId) {
+        List<LabelDO> labelDOList = userLabelDao.listLabelsByUserIdAndContentId(userId, contentId);
+        return DozerUtil.mapList(labelDOList, LabelDTO.class);
+    }
+
 }

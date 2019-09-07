@@ -2,6 +2,8 @@ package com.poetry.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class PoemListVO {
     private String contentId;
@@ -9,4 +11,6 @@ public class PoemListVO {
     private String writer;
     private String dynasty;
     private String title;
+
+    private List<LabelVO> labelList;
 }

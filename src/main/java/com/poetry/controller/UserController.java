@@ -67,7 +67,7 @@ public class UserController {
 
         UserDTO userDTO = userService.getUserByUserId(userId);
         userHomePageVO.setNickname(userDTO.getNickname());
-        userHomePageVO.setHeaderImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567788835412&di=b71deb8f8148b26c38a6108e4515e4ff&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F22%2F20190122210534_qkmxb.jpg");
+        userHomePageVO.setHeaderImage("https://b-ssl.duitang.com/uploads/item/201901/22/20190122210534_qkmxb.jpg");
 
 
         List<LabelDTO> labelDTOList = userLabelService.listLabelsByUserId(userId);
@@ -79,6 +79,16 @@ public class UserController {
         List<PoemDTO> poemDtoList = userPoemService.listPoemsUserCollect(userId);
         if(poemDtoList != null) {
             List<PoemListVO> poemListVOList = DozerUtil.mapList(poemDtoList, PoemListVO.class);
+
+            for (PoemListVO poemListVO : poemListVOList) {
+                List<LabelDTO> poemLabelDTOList = userLabelService.listLabelsByUserIdAndContentId(userId, poemListVO.getContentId());
+
+                if (poemLabelDTOList != null) {
+                    List<LabelVO> poemLabelVOList = DozerUtil.mapList(poemLabelDTOList, LabelVO.class);
+                    poemListVO.setLabelList(poemLabelVOList);
+                }
+            }
+
             userHomePageVO.setPoemListList(poemListVOList);
         }
 

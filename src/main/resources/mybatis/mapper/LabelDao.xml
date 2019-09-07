@@ -11,4 +11,13 @@
         WHERE userId =  #{userId};
     </select>
 
+    <select id="listLabelsByUserIdAndContentId" resultType="com.poetry.entity.LabelDO">
+        SELECT
+        L.labelId, L.labelName
+        FROM
+        ( SELECT labelId FROM user_poem_label_table WHERE userId = #{userId} AND contentId = #{contentId} )
+        upl LEFT JOIN label_table L ON L.labelId = upl.labelId;
+
+    </select>
+
 </mapper>
