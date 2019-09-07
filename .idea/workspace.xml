@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="642c177e-b54c-4718-9c36-ed8ecfd86d16" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/poetry/dao/UserPoemLabelDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/poetry/dto/LabelRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/UserPoemLabelDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/poetry/controller/UserLabelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poetry/controller/UserLabelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/poetry/dao/UserLabelDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poetry/dao/UserLabelDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/poetry/service/UserLabelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poetry/service/UserLabelService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/poetry/serviceImpl/UserLabelImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poetry/serviceImpl/UserLabelImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/LabelDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/LabelDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/UserPoemLabelDao" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/poetry/controller/UserLabelController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/poetry/controller/UserLabelController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/poetry/dao/UserLabelDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/poetry/dao/UserLabelDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/poetry/service/UserLabelService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/poetry/service/UserLabelService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/poetry/serviceImpl/UserLabelImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/poetry/serviceImpl/UserLabelImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/mapper/LabelDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis/mapper/LabelDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/mapper/UserPoemLabelDao" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -49,8 +34,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/poetry/controller/UserLabelController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="543">
-              <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
+            <state relative-caret-position="272">
+              <caret line="74" column="5" lean-forward="true" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -73,8 +58,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/poetry/dto/LabelRequestDTO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="255">
+              <caret line="17" column="28" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -468,7 +453,7 @@
     <frame x="28" y="23" width="1366" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3323263" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3323263" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -478,7 +463,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.2700637" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.21656051" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.21656051" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3299363" />
@@ -910,8 +895,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/poetry/dto/LabelRequestDTO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="255">
+          <caret line="17" column="28" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -920,8 +905,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/poetry/controller/UserLabelController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
-          <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
+        <state relative-caret-position="272">
+          <caret line="74" column="5" lean-forward="true" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
