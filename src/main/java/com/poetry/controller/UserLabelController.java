@@ -2,6 +2,7 @@ package com.poetry.controller;
 
 import com.poetry.common.Response;
 import com.poetry.dto.LabelDTO;
+import com.poetry.dto.LabelRequestDTO;
 import com.poetry.service.UserLabelService;
 import com.poetry.utils.DozerUtil;
 import com.poetry.vo.LabelVO;
@@ -29,4 +30,17 @@ public class UserLabelController {
             return Response.error();
         }
     }
+
+    @RequestMapping(value="labelAdd", method={RequestMethod.GET, RequestMethod.POST})
+    public Response<String> labelAdd(LabelRequestDTO labelRequestDTO) {
+
+        Boolean isSuccess = userLabelService.saveLabel(labelRequestDTO.getUserId(), labelRequestDTO.getLabelName());
+
+        if (isSuccess == true) {
+            return Response.ok("Success");
+        } else {
+            return Response.error();
+        }
+    }
+
 }

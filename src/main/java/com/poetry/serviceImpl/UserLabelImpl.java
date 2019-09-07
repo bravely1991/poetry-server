@@ -1,6 +1,7 @@
 package com.poetry.serviceImpl;
 
 import com.poetry.dao.UserLabelDao;
+import com.poetry.dao.UserPoemLabelDao;
 import com.poetry.dto.LabelDTO;
 import com.poetry.dto.PoemDTO;
 import com.poetry.entity.LabelDO;
@@ -15,6 +16,8 @@ import java.util.List;
 public class UserLabelImpl implements UserLabelService {
     @Autowired
     private UserLabelDao userLabelDao;
+    @Autowired
+    private UserPoemLabelDao userPoemLabelDao;
 
     @Override
     public List<LabelDTO> listLabelsByUserId(String userId) {
@@ -30,7 +33,17 @@ public class UserLabelImpl implements UserLabelService {
 
     @Override
     public Boolean getIsPoemLabelAdded(String userId, String contentId, String labelId) {
-        return userLabelDao.getIsPoemLabelAdded(userId, contentId, labelId);
+        return userPoemLabelDao.getIsPoemLabelAdded(userId, contentId, labelId);
+    }
+
+    @Override
+    public Boolean savePoemLabel(String userId, String contentId, String labelId) {
+        return userPoemLabelDao.savePoemLabel(userId, contentId, labelId);
+    }
+
+    @Override
+    public Boolean saveLabel(String userId, String labelName) {
+        return userLabelDao.saveLabel(userId, labelName);
     }
 
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.poetry.dao.UserPoemLabelDao">
+
+    <select id="getIsPoemLabelAdded" resultType = "Boolean">
+        SELECT
+        COUNT(1)
+        FROM user_poem_label_table
+        WHERE userId = #{userId} AND contentId = #{contentId} AND labelId = #{labelId};
+    </select>
+
+    <insert id="savePoemLabel">
+        INSERT INTO user_poem_label_table
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                userId,
+            </if>
+            <if test="contentId != null">
+                contentId,
+            </if>
+            <if test="labelId != null">
+                labelId,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="contentId != null">
+                #{contentId},
+            </if>
+            <if test="labelId != null">
+                #{labelId},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

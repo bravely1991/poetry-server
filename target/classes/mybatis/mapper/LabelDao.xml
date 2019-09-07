@@ -20,11 +20,25 @@
 
     </select>
 
-    <select id="getIsPoemLabelAdded" resultType = "Boolean">
-        SELECT
-        COUNT(1)
-        FROM user_poem_label_table
-        WHERE userId = #{userId} AND contentId = #{contentId} AND labelId = #{labelId};
-    </select>
+
+    <insert id="saveLabel">
+        INSERT INTO label_table
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                userId,
+            </if>
+            <if test="labelName != null">
+                labelName,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="labelName != null">
+                #{labelName},
+            </if>
+        </trim>
+    </insert>
 
 </mapper>
