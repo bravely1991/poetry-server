@@ -94,7 +94,9 @@ public class PoemController {
         if(poemDto != null) {
             PoemDetailVO poemDetailVO = DozerUtil.map(poemDto, PoemDetailVO.class);
 
-            List<LabelDTO> labelDTOList = userLabelService.listLabelsByUserId(poemRequestDTO.getUserId());
+
+
+            List<LabelDTO> labelDTOList = userLabelService.listLabelsByUserIdAndContentId(poemRequestDTO.getUserId(), poemRequestDTO.getContentId());
             if(labelDTOList != null) {
                 List<LabelVO> labelVOList = DozerUtil.mapList(labelDTOList, LabelVO.class);
 

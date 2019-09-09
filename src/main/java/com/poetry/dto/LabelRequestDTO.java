@@ -16,4 +16,5 @@ public class LabelRequestDTO implements Serializable {
     private String contentId;
     private String labelId;
     private String labelName;
+    private Boolean isRemoved;
 }

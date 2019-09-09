@@ -36,4 +36,11 @@
         </trim>
     </insert>
 
+    <update id="poemLabelUpdate">
+        UPDATE
+        user_poem_label_table
+        SET isRemoved =  #{isRemoved}
+        WHERE userId = #{userId} AND contentId = #{contentId} AND labelId = #{labelId};
+    </update>
+
 </mapper>

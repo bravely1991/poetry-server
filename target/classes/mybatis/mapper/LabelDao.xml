@@ -41,4 +41,25 @@
         </trim>
     </insert>
 
+    <update id="labelUpdate">
+        UPDATE
+        label_table
+        SET labelName =  #{labelName}
+        WHERE labelId = #{labelId} AND userId = #{userId};
+    </update>
+
+    <delete id="labelDelete">
+        DELETE
+        FROM label_table
+        WHERE labelId = #{labelId} AND userID =  #{userId};
+    </delete>
+
+
+    <select id="getLabelId" resultType="String">
+        SELECT labelId
+        FROM label_table
+        WHERE userId =  #{userId} AND labelName = #{labelName}
+    </select>
+
+
 </mapper>

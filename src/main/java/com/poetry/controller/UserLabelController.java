@@ -1,5 +1,6 @@
 package com.poetry.controller;
 
+import com.github.pagehelper.util.StringUtil;
 import com.poetry.common.Response;
 import com.poetry.dto.LabelDTO;
 import com.poetry.dto.LabelRequestDTO;
@@ -31,6 +32,7 @@ public class UserLabelController {
         }
     }
 
+    // 创建新的标签
     @RequestMapping(value="labelCreate", method={RequestMethod.GET, RequestMethod.POST})
     public Response<String> labelCreate(LabelRequestDTO labelRequestDTO) {
 
@@ -43,8 +45,9 @@ public class UserLabelController {
         }
     }
 
-    @RequestMapping(value="LabelAdd", method={RequestMethod.GET, RequestMethod.POST})
-    public Response<String> LabelAdd(LabelRequestDTO labelRequestDTO) {
+    // 将指定标签添加到指定唐诗
+    @RequestMapping(value="labelAdd", method={RequestMethod.GET, RequestMethod.POST})
+    public Response<String> labelAdd(LabelRequestDTO labelRequestDTO) {
 
         Boolean isSuccess = userLabelService.savePoemLabel(labelRequestDTO.getUserId(), labelRequestDTO.getContentId(), labelRequestDTO.getLabelId());
 
@@ -55,30 +58,64 @@ public class UserLabelController {
         }
     }
 
-    @RequestMapping(value="LabelCreateAndAdd", method={RequestMethod.GET, RequestMethod.POST})
-    public Response<String> LabelCreateAndAdd(LabelRequestDTO labelRequestDTO) {
+    // 创建新的标签并添加到指定唐诗
+    @RequestMapping(value="labelCreateAndAdd", method={RequestMethod.GET, RequestMethod.POST})
+    public Response<String> labelCreateAndAdd(LabelRequestDTO labelRequestDTO) {
 
         Boolean isCreateSuccess = userLabelService.saveLabel(labelRequestDTO.getUserId(), labelRequestDTO.getLabelName());
 
         if (isCreateSuccess == true) {
-            Boolean isAddSuccess = userLabelService.savePoemLabel(labelRequestDTO.getUserId(), labelRequestDTO.getContentId(), labelRequestDTO.getLabelId());
 
-            if (isAddSuccess == true) {
-                return Response.ok("Success");
+            String labelId = userLabelService.getLabelId(labelRequestDTO.getUserId(), labelRequestDTO.getLabelName());
+            if (StringUtil.isNotEmpty(labelId)) {
+                Boolean isAddSuccess = userLabelService.savePoemLabel(labelRequestDTO.getUserId(), labelRequestDTO.getContentId(), labelId);
+                if (isAddSuccess == true) {
+                    return Response.ok("Success");
+                } else {
+                    // 删除新增的标签 事务统一
+                    userLabelService.labelDelete(labelRequestDTO.getUserId(), labelId);
+                    return Response.error();
+                }
             } else {
-                // 删除新增的标签 事务统一
                 return Response.error();
             }
+
         } else {
             return Response.error();
         }
     }
 
-    // 未完成
-    @RequestMapping(value="LabelRemove", method={RequestMethod.GET, RequestMethod.POST})
-    public Response<String> LabelRemove(LabelRequestDTO labelRequestDTO) {
+    // 修改指定标签ID的标签名称
+    @RequestMapping(value="labelUpdate", method={RequestMethod.GET, RequestMethod.POST})
+    public Response<String> labelUpdate(LabelRequestDTO labelRequestDTO) {
 
-        Boolean isSuccess = userLabelService.savePoemLabel(labelRequestDTO.getUserId(), labelRequestDTO.getContentId(), labelRequestDTO.getLabelId());
+        Boolean isSuccess = userLabelService.labelUpdate(labelRequestDTO.getUserId(), labelRequestDTO.getLabelId(), labelRequestDTO.getLabelName());
+
+        if (isSuccess == true) {
+            return Response.ok("Success");
+        } else {
+            return Response.error();
+        }
+    }
+
+    // 从唐诗中添加、移除已存在的指定标签
+    @RequestMapping(value="labelRemove", method={RequestMethod.GET, RequestMethod.POST})
+    public Response<String> labelRemove(LabelRequestDTO labelRequestDTO) {
+
+        Boolean isSuccess = userLabelService.poemLabelUpdate(labelRequestDTO.getUserId(), labelRequestDTO.getContentId(), labelRequestDTO.getLabelId(), labelRequestDTO.getIsRemoved());
+
+        if (isSuccess == true) {
+            return Response.ok("Success");
+        } else {
+            return Response.error();
+        }
+    }
+
+    // 从我的标签中删除指定标签
+    @RequestMapping(value="labelDelete", method={RequestMethod.GET, RequestMethod.POST})
+    public Response<String> labelDelete(LabelRequestDTO labelRequestDTO) {
+
+        Boolean isSuccess = userLabelService.labelDelete(labelRequestDTO.getUserId(), labelRequestDTO.getLabelId());
 
         if (isSuccess == true) {
             return Response.ok("Success");

@@ -18,6 +18,9 @@
 /Users/brave/Desktop/poetry-server/src/main/java/com/poetry/service/UserService.java
 /Users/brave/Desktop/poetry-server/src/main/java/com/poetry/dto/BaseTokenDTO.java
 /Users/brave/Desktop/poetry-server/src/main/java/com/poetry/utils/RedisUtil.java
+/Users/brave/Desktop/poetry-server/src/main/java/com/poetry/dto/LabelRequestDTO.java
+/Users/brave/Desktop/poetry-server/src/main/java/com/poetry/dao/UserPoemLabelDao.java
+/Users/brave/Desktop/poetry-server/src/main/java/com/poetry/dto/PoemRequestDTO.java
 /Users/brave/Desktop/poetry-server/src/main/java/com/poetry/serviceImpl/UserPoemServiceImpl.java
 /Users/brave/Desktop/poetry-server/src/main/java/com/poetry/vo/UserHomePageVO.java
 /Users/brave/Desktop/poetry-server/src/main/java/com/poetry/Application.java
@@ -27,7 +30,6 @@
 /Users/brave/Desktop/poetry-server/src/main/java/com/poetry/dao/PoemDao.java
 /Users/brave/Desktop/poetry-server/src/main/java/com/poetry/controller/UserLabelController.java
 /Users/brave/Desktop/poetry-server/src/main/java/com/poetry/common/RequestBaseDTO.java
-/Users/brave/Desktop/poetry-server/src/main/java/com/poetry/dto/UserPoemDTO.java
 /Users/brave/Desktop/poetry-server/src/main/java/com/poetry/dto/LabelDTO.java
 /Users/brave/Desktop/poetry-server/src/main/java/com/poetry/vo/UserVO.java
 /Users/brave/Desktop/poetry-server/src/main/java/com/poetry/entity/UserDO.java

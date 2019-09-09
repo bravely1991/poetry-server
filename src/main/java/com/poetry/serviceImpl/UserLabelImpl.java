@@ -46,4 +46,26 @@ public class UserLabelImpl implements UserLabelService {
         return userLabelDao.saveLabel(userId, labelName);
     }
 
+    @Override
+    public Boolean poemLabelUpdate(String userId, String contentId, String labelId, Boolean isRemoved) {
+        return userPoemLabelDao.poemLabelUpdate(userId, contentId, labelId, isRemoved);
+    }
+
+    @Override
+    public Boolean labelUpdate(String userId, String labelId, String labelName) {
+        return userLabelDao.labelUpdate(userId, labelId, labelName);
+    }
+
+    @Override
+    public Boolean labelDelete(String userId, String labelId) {
+        return userLabelDao.labelDelete(userId, labelId);
+    }
+
+    @Override
+    public String getLabelId(String userId, String labelName) {
+        return userLabelDao.getLabelId(userId, labelName);
+    }
+
+
+
 }

@@ -11,4 +11,8 @@ public interface UserLabelService {
     Boolean getIsPoemLabelAdded(String userId, String contentId, String labelId);
     Boolean savePoemLabel(String userId, String contentId, String labelId);
     Boolean saveLabel(String userId, String labelName);
+    Boolean poemLabelUpdate(String userId, String contentId, String labelId, Boolean isRemoved);
+    Boolean labelUpdate(String userId, String labelId, String labelName);
+    Boolean labelDelete(String userId, String labelId);
+    String getLabelId(String userId, String labelName);
 }
